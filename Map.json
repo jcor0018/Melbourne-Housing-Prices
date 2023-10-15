@@ -41,7 +41,8 @@
                     "field": "Sumfield",
                     "type": "quantitative",
                     "title": "$AUD Per Bedroom",
-                    "legend": {"type": "gradient", "labelFontSize": 15, "titleFontSize": 17}
+                    "legend": {"type": "gradient", "labelFontSize": 15, "titleFontSize": 17},
+                    "scale": {"scheme": "blues"}
                 },
                 "tooltip":[
                     {
