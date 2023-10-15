@@ -113,7 +113,8 @@
               "field": "Price",
               "type": "quantitative",
               "title": "Sold Price ($AUD)"
-            }
+            },
+            "tooltip": {"field": "Price", "title": "Price (AUD$)", "type": "quantitative"}
           }
         },
         {
@@ -140,7 +141,21 @@
             },
             "color": {        
               "value": "#000000"
-            }
+            },
+            "tooltip": [
+              {
+                "field": "Bedroom2", "title": "Bedrooms", "type": "quantitative"
+              },
+              {
+                "field": "IQmax", "title": "Max Expected Price (AUD$)", "type": "quantitative"
+              },
+              {
+                "field": "Price", "aggregate": "average", "title": "Median (AUD$)", "type": "quantitative", "format": ".0f"
+              },
+              {
+                "field": "Price", "aggregate": "min", "title": "Minimum (AUD$)", "type": "quantitative"
+              }
+            ]
           }
         },
         {
@@ -162,7 +177,21 @@
             },
             "color": {        
               "value": "#000000"
-            }
+            },
+            "tooltip": [
+              {
+                "field": "Bedroom2", "title": "Bedrooms", "type": "quantitative"
+              },
+              {
+                "field": "IQmax", "title": "Max Expected Price (AUD$)", "type": "quantitative"
+              },
+              {
+                "field": "Price", "aggregate": "average", "title": "Median (AUD$)", "type": "quantitative", "format": ".0f"
+              },
+              {
+                "field": "Price", "aggregate": "min", "title": "Minimum (AUD$)", "type": "quantitative"
+              }
+            ]
           }
         },
           {
@@ -189,7 +218,21 @@
                 },
                 "color": {        
                   "value": "#395EC7"
-                }
+                },
+                "tooltip": [
+                  {
+                    "field": "Bedroom2", "title": "Bedrooms", "type": "quantitative"
+                  },
+                  {
+                    "field": "IQmax", "title": "Max Expected Price (AUD$)", "type": "quantitative"
+                  },
+                  {
+                    "field": "Price", "aggregate": "average", "title": "Median (AUD$)", "type": "quantitative", "format": ".0f"
+                  },
+                  {
+                    "field": "Price", "aggregate": "min", "title": "Minimum (AUD$)", "type": "quantitative"
+                  }
+                ]
               }
             },
             {
@@ -212,7 +255,21 @@
                  
                   "color": {        
                     "value": "#FFFFFF"
-                  }
+                  },
+                  "tooltip": [
+                    {
+                      "field": "Bedroom2", "title": "Bedrooms", "type": "quantitative"
+                    },
+                    {
+                      "field": "IQmax", "title": "Max Expected Price (AUD$)", "type": "quantitative"
+                    },
+                    {
+                      "field": "Price", "aggregate": "average", "title": "Median (AUD$)", "type": "quantitative", "format": ".0f"
+                    },
+                    {
+                      "field": "Price", "aggregate": "min", "title": "Minimum (AUD$)", "type": "quantitative"
+                    }
+                  ]
                 }
               }, 
               {
@@ -236,7 +293,21 @@
                   },
                   "color": {        
                     "value": "#000000"
-                  }
+                  },
+                  "tooltip": [
+                    {
+                      "field": "Bedroom2", "title": "Bedrooms", "type": "quantitative"
+                    },
+                    {
+                      "field": "IQmax", "title": "Max Expected Price (AUD$)", "type": "quantitative"
+                    },
+                    {
+                      "field": "Price", "aggregate": "average", "title": "Median (AUD$)", "type": "quantitative", "format": ".0f"
+                    },
+                    {
+                      "field": "Price", "aggregate": "min", "title": "Minimum (AUD$)", "type": "quantitative"
+                    }
+                  ]
                 }
               } 
               
