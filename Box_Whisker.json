@@ -1,0 +1,357 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "params": [
+      {
+        "name": "LGA_Selector",
+        "bind": {
+          "input": "select",
+          "options": [
+            null,
+            "BANYULE",
+            "BAYSIDE",
+            "BOROONDARA",
+            "BRIMBANK",
+            "CASEY",
+            "DAREBIN",
+            "FRANKSTON",
+            "GLEN EIRA",
+            "GREATER DANDENONG",
+            "HOBSONS BAY",
+            "HUME",
+            "KINGSTON",
+            "KNOX",
+            "MANNINGHAM",
+            "MARIBYRNONG",
+            "MAROONDAH",
+            "MELBOURNE",
+            "MELTON",
+            "MONASH",
+            "MOONEE VALLEY",
+            "MERRI-BEK",
+            "NILLUMBIK",
+            "PORT PHILLIP",
+            "STONNINGTON",
+            "WHITEHORSE",
+            "WHITTLESEA",
+            "WYNDHAM",
+            "YARRA"
+          ],
+          "labels":[
+            "All",
+            "Banyule City Council",
+            "Bayside City Council",
+            "Boroondara City Council",
+            "Brimbank City Council",
+            "Casey City Council",
+            "Darebin City Council",
+            "Frankston City Council",
+            "Glen Eira City Council",
+            "Greater Dandenong City Council",
+            "Hobsons Bay City Council",
+            "Hume City Council",
+            "Kingston City Council",
+            "Knox City Council",
+            "Manningham City Council",
+            "Maribyrnong City Council",
+            "Maroondah City Council",
+            "Melbourne City Council",
+            "Melton City Council",
+            "Monash City Council",
+            "Moonee Valley City Council",
+            "Merri-Bek City Council",
+            "Nillumbik Shire Council",
+            "Port Phillip City Council",
+            "Stonnington City Council",
+            "Whitehorse City Council",
+            "Whittlesea City Council",
+            "Wyndham City Council",
+            "Yarra City Council"
+          ],
+          "name": "LGA Selection: "
+        }
+      }
+    ],
+    "columns": 1,
+    "align":"none",
+    "concat":[{
+      "title": {"text": "Expected House Price Range", "fontSize": 30},
+      "data": {
+        "url": "data/Melbourne_housing_edit.csv"
+      },
+      "height": 500,
+      "width": 700,
+    
+      "transform": [
+        {
+          "filter": "LGA_Selector == null || datum.CouncilArea == LGA_Selector"
+        },
+        {
+          "joinaggregate": [{"op": "q1", "field": "Price", "as": "q1House"}],
+          "groupby": ["Bedroom2"]
+        },
+        {
+          "joinaggregate":[{"op": "q3", "field": "Price", "as": "q3House"}],
+          "groupby": ["Bedroom2"]
+        },
+        {
+          "calculate": "((datum.q3House-datum.q1House)*1.5 + datum.q3House)", "as": "IQmax"
+        }
+      ],
+      "layer":[
+        {
+          "transform": [{
+            "filter": "datum.Price > datum.IQmax"
+          }],
+          "mark":{"type": "circle"},
+          "encoding": {
+            "x":{
+              "field": "Bedroom2",
+              "type": "ordinal",
+              "title": "Number of Bedrooms"
+            },
+            "y":{
+              "field": "Price",
+              "type": "quantitative",
+              "title": "Sold Price ($AUD)"
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "bar",
+            "width": 1.5,
+            "tooltip": {"content": "data"}
+            },
+          "encoding": {
+            "x": {
+              "field": "Bedroom2",
+              "type": "ordinal",
+              "title": "Number of Bedrooms"
+            },
+            "y": {
+              "field":"IQmax",
+              "aggregate": "average",
+              "type": "quantitative",
+              "title": "Sold Price ($AUD)"
+            },
+            "y2":{
+              "field": "Price",
+              "aggregate":"min"
+            },
+            "color": {        
+              "value": "#000000"
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "tick",
+            "width": 25
+            },
+          "encoding": {
+            "x": {
+              "field": "Bedroom2",
+              "type": "ordinal",
+              "title": "Number of Bedrooms"
+            },
+            "y": {
+              "field":"IQmax",
+              "aggregate": "average",
+              "type": "quantitative",
+              "title": "Sold Price ($AUD)"
+            },
+            "color": {        
+              "value": "#000000"
+            }
+          }
+        },
+          {
+            "mark": {
+              "type": "bar",
+              "width": 25,
+              "tooltip": {"content": "data"} 
+              },
+              "encoding": {
+                "x": {
+                  "field": "Bedroom2",
+                  "type": "ordinal",
+                  "title": "Number of Bedrooms"
+                },
+                "y": {
+                  "field": "Price",
+                  "aggregate":"q3",
+                  "type": "quantitative",
+                  "title": "Sold Price ($AUD)"
+                },
+                "y2":{
+                  "field": "Price",
+                  "aggregate": "q1"
+                },
+                "color": {        
+                  "value": "#395EC7"
+                }
+              }
+            },
+            {
+              "mark": {
+                "type": "tick",
+                "width": 30
+                },
+                "encoding": {
+                  "y": {
+                    "field": "Price",
+                    "aggregate":"median",
+                    "type": "quantitative",
+                    "title": "Sold Price ($AUD)"
+                  },
+                  "x": {
+                    "field": "Bedroom2",
+                    "type": "nominal",
+                    "title": "Number of Bedrooms"
+                  },
+                 
+                  "color": {        
+                    "value": "#FFFFFF"
+                  }
+                }
+              }, 
+              {
+                "mark": {
+                  "type": "tick",
+                  "width": 25 
+                  },
+                "encoding": {
+                  "x": {
+                    "field": "Bedroom2",
+                    "type": "ordinal",
+                    "title": "Number of Bedrooms",
+                    "axis": {"labelFontSize": 15, "labelAngle": 0, "titleFontSize": 20, "labelAlign": "center", "labelPadding": 10}
+                  },
+                  "y": {
+                    "field": "Price",
+                    "aggregate":"min",
+                    "type": "quantitative",
+                    "title": "Sold Price ($AUD)",
+                    "axis": {"labelFontSize": 15, "titleFontSize": 20}
+                  },
+                  "color": {        
+                    "value": "#000000"
+                  }
+                }
+              } 
+              
+          ]  
+        },
+        {
+          "title": {"text": "Figure 2: Box Plot showing the expected house price range for the number of bedrooms within a house.", "fontSize": 20, "fontWeight": "normal"},
+          "mark":"text",
+          "width": 700
+        },
+        {
+          "title": {"text": "Percentages of Methods of Selling and Types of Houses Sold", "fontSize": 30},
+          "hconcat":[{
+            
+              "data": {
+                  "url": "data/Melbourne_housing_edit.csv"
+              },
+              "width": 300,
+              "height": 300,
+              "transform": [
+                {
+                  "filter": "LGA_Selector == null || datum.CouncilArea == LGA_Selector"
+                },
+                {
+                  "joinaggregate": [{"op": "sum", "field": "count", "as": "SumMeth"}],
+                  "groupby": ["Method"]
+                },
+                {
+                  "joinaggregate": [{"op": "sum", "field": "count", "as": "collect"}]
+                },
+                {
+                  "calculate": "datum.SumMeth/datum.collect", "as": "Percentage"
+                }
+              ],
+              "encoding": {
+                "theta": {
+                  "field": "Percentage",
+                  "aggregate":"average",
+                  "type": "quantitative",
+                  "stack": true
+                },
+                "color": {
+                  "field": "Method",
+                  "type": "nominal",
+                  "legend": {"orient": "bottom", "titleFontSize": 16, "labelFontSize": 14}
+                }
+              },
+              "layer":[{
+                "mark": {"type": "arc", "innerRadius": 60, "outerRadius": 100}
+              },
+              {
+                "mark":{"type": "text", "radius": 125, "fontSize": 16},
+                "encoding": {
+                  "text": {"field": "Percentage", "aggregate":"average", "type": "nominal", "format": ".2%"}
+                  
+                }
+              },
+              {
+                "mark": {"type": "text", "align": "center", "fontSize": 16, "fill": "black"},
+                "encoding": {
+                  "text":{"field": "collect", "aggregate": "average", "format": ".0f"}
+                }
+              }
+            ]
+          },
+        {
+          "data": {
+              "url": "data/Melbourne_housing_edit.csv"
+          },
+          "width": 300,
+          "height": 300,
+          "transform": [
+            {
+              "filter": "LGA_Selector == null || datum.CouncilArea == LGA_Selector"
+            },
+            {
+              "joinaggregate": [{"op": "sum", "field": "count", "as": "SumType"}],
+              "groupby": ["Type"]
+            },
+            {
+              "joinaggregate": [{"op": "sum", "field": "count", "as": "collect"}]
+            },
+            {
+              "calculate": "datum.SumType/datum.collect", "as": "typePer"
+            }
+          ],
+          "encoding": {
+            "theta": {
+              "field": "typePer",
+              "aggregate":"average",
+              "type": "quantitative",
+              "stack": true
+            },
+            "color": {
+              "field": "Type",
+              "type": "nominal"
+            }
+          },
+          "layer":[
+            {
+              "mark": {"type": "arc", "innerRadius": 60, "outerRadius": 100}
+            },
+            {
+              "mark":{"type": "text", "radius": 125, "fontSize": 16},
+              "encoding": {
+                "text": {"field": "typePer", "aggregate":"average", "type": "nominal", "format": ".2%"}
+              }
+            },
+            {
+              "mark": {"type": "text", "align": "center", "fontSize": 16, "fill": "black"},
+              "encoding": {
+                "text":{"field": "collect", "aggregate": "average", "format": ".0f"}
+              }
+            }
+          ]
+        }]
+        }]
+      }

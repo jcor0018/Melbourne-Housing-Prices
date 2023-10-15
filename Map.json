@@ -1,0 +1,57 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": {"text": "Normalised Average House Price by Number of Bedroom", "fontSize": 30},
+    "width": 700,
+    "height": 600,
+    "layer":[
+        {
+            "data": {
+                "url": "data/LGA_POLYGON2.json",
+                "format": {
+                    "type": "topojson", 
+                    "feature": "LGA_POLYGON"
+                }
+            },
+            "transform": [
+                {
+                    "lookup": "properties.LGA_NAME",
+                    "from": {
+                        "data": {
+                            "url": "data/Melbourne_housing_edit.csv"
+                        },
+                        "key": "CouncilArea",
+                        "fields": ["CouncilArea", "Price", "Bedroom2"]
+                    }
+                },
+                {
+                    "calculate": "datum.Price/datum.Bedroom2", "as": "normal"
+                },
+                {
+                    "joinaggregate": [{"op": "sum", "field": "normal", "as": "Sumfield"}],
+                    "groupby": ["CouncilArea"]
+                }
+                
+            ],
+            "mark": {
+                "type": "geoshape",
+                "tooltip": true
+            },
+            "encoding": {
+                "color": {
+                    "field": "Sumfield",
+                    "type": "quantitative",
+                    "title": "$AUD Per Bedroom",
+                    "legend": {"type": "gradient", "labelFontSize": 15, "titleFontSize": 17}
+                },
+                "tooltip":[
+                    {
+                        "field": "properties.LGA_NAME", "title": "LGA Name", "type": "nominal"
+                    },
+                    {
+                        "field": "Sumfield", "title": "AUD$ per Bedroom", "type": "quantitative", "format": ".0f"
+                    }
+                ]
+            }
+        }
+    ]
+}

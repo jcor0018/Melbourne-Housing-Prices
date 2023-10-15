@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Import Vega & Vega-Lite -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+  
+  <!-- Import pure.css -->
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
+    integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- CSS file -->
+  <link rel="stylesheet" type="text/css" href="css/styles.css" media="all">
+  
+</head>
+<body>
+  <div class="page">
+    <div class="pure-g">
+      <div class="pure-u-1-2">
+        <div class="h1">
+          <h1>MELBOURNE HOUSE PRICES</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="pure-g">
+      <div class="pure-u-1-2">
+        <div id="symbol_map" class="vis-container">
+        </div>
+      </div>
+      <div class="pure-u-1-2">
+        <div class="description description-right">
+          <div class="p2">
+            <p>
+              The map in Figure 1 shows the average house prices in each Local Government Area (LGA) normalised by the 
+              number of bedrooms within each house. The average price per bedroom in the map looks to increase the 
+              closer to the city centre it is. This is shown by the LGA which the highest average house price is 
+              Stonnington with an average of AUD$833,333 per bedroom. Additionally the LGA with the lowest average 
+              price per bedroom is Wyndham with an average of AUD$128,000 per bedroom. 
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <p>Figure 1: Choropleth map of Melbourne of average house price normalised by number of bedrooms.</p>
+      </div>
+    </div>
+
+    <div class="pure-g">
+      <div class="pure-u-1-2">
+        <div id="box" class="vis-container">
+        </div>
+      </div>
+      <div class="pure-u-1-2">
+        <div class="description description-right">
+          <div class="p2">
+            <p>
+              This plot, Figure 2, shows what to expect in terms of house prices for the number of 
+              bedrooms. A selector at the bottom of the page can be used to change the LGA considered. The lowest 
+              points in each column represent the minimum price a house has been sold for in the area considered. The 
+              blue region is the interquatile range which is the region in which 50% of the houses considered have been sold 
+              for the number of bedrooms, with a white line representing the median house price. The maximum line 
+              encloses the Price range of 95% of houses sold for that number of bedrooms, the points outside of 
+              this area show outlyers which should not be considered unless looking for a house with many luxuries.
+            </p>
+          </div>
+          <p>
+            In both charts the number in the middle is the total number of houses sold in the area considered.
+            The left chart shows the percentage number of methods houses have been sold in the area considered. The
+            Second chart shows the types of houses sold. House includes: House; Cottage; Villa; Semi; Terrace. Unit 
+            inclused: Unit; Duplex. Townhouse incluses: Townhouse.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <div class="Figure3">
+          <p>
+            Figure 3: Pie charts showing the methods in which the houses have been sold and their percentage of occurance
+            (left) and the types of houses sold and their percentage (right).
+          </p>
+        </div>
+      </div>
+    </div>
+
+
+    <script type="text/javascript">
+
+      var spec1 = "Map.json";
+
+      var spec3 = "Box_Whisker.json";
+
+      vegaEmbed('#symbol_map', spec1).then(function(result) {}).catch(console.error);
+
+      vegaEmbed('#box', spec3).then(function (result) {}).catch(console.error);
+    </script>
+  </div>
+</body>
+</html>
